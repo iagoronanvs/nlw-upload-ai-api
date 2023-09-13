@@ -1,0 +1,36 @@
+# @name get-prompts
+GET http://localhost:3333/prompts
+
+###
+
+# @name list-prompts
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="example.mp3"
+Content-Type: audio/mpeg
+
+< ./example.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# @name create-transcription
+POST http://localhost:3333/videos/4ebeea1c-c72d-4b26-8522-67bcce3bc052/transcription
+Content-Type: application/json
+
+{
+  "prompt": "testando, api, openai"
+}
+
+###
+# @name create-transcription
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+  "videoId": "4ebeea1c-c72d-4b26-8522-67bcce3bc052",
+  "temperature": 0.5,
+  "template": "Gere um resume sucinto da transcrição do vídeo informado a seguir: '''{transcription}'''"
+}
